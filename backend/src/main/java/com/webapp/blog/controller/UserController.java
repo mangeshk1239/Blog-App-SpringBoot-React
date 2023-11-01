@@ -13,7 +13,7 @@ import com.webapp.blog.service.UserService;
 
 @Controller
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api/user")
 public class UserController {
     
     @Autowired UserService userService;
