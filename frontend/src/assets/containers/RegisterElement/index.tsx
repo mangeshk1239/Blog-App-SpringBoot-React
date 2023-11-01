@@ -126,7 +126,8 @@ export default function RegisterElement(): JSX.Element {
                 firstName: data.get('firstName'),
                 lastName: data.get('lastName'),
                 email: data.get('email'),
-                password: data.get('password')
+                password: data.get('password'),
+                createdAt: new Date()
             };
 
             console.log("userData", registerUserData);
