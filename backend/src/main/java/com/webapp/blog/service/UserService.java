@@ -10,10 +10,12 @@ import com.webapp.blog.repository.UserRepository;
 
 @Service
 public class UserService {
-    
-    @Autowired UserRepository userRepository;
 
-    public List<User> getAllUsers() {
-        return userRepository.getAll();
+    @Autowired
+    UserRepository userRepository;
+
+    public Boolean create(User userData) {
+        userRepository.create(userData);
+        return true;
     }
 }
