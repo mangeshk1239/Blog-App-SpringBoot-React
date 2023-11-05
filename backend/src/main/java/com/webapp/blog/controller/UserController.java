@@ -29,22 +29,21 @@ public class UserController {
     UserService userService;
 
     @PostMapping("/create")
-    // public Boolean createUser(@RequestBody String reqBody) {
-    // try {
-    // userService.create(reqBody);
-    // return true;
-    // } catch (Exception e) {
-    // System.out.println("ERROR");
-    // return false;
-    // }
-    // }
     public ResponseEntity<Object> createUser(@RequestBody User userData) {
 
-        userService.create(userData);
         HashMap<String, String> data = new HashMap<>();
-        data.put("success", "true");
-        data.put("message", "asd lol using ok");
+        Boolean userExists = userService.exists(userData.getEmail());
 
-        return new ResponseEntity<>(data, HttpStatus.OK);
+        if (userExists == true) {
+            data.put("success", "false");
+            data.put("message", "User already exists");
+            return new ResponseEntity<Object>(data, HttpStatus.BAD_REQUEST);
+        }
+
+        userService.create(userData);
+
+        data.put("success", "true");
+        data.put("message", "Registered Successfully");
+        return new ResponseEntity<Object>(data, HttpStatus.OK);
     }
 }

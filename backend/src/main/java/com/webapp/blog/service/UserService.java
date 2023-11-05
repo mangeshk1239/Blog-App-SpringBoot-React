@@ -14,6 +14,10 @@ public class UserService {
     @Autowired
     UserRepository userRepository;
 
+    public Boolean exists(String userEmail) {
+        return userRepository.exists(userEmail);
+    }
+
     public Boolean create(User userData) {
         userRepository.create(userData);
         return true;

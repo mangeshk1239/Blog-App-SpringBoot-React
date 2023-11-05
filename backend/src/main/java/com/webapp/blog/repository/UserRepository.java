@@ -15,9 +15,14 @@ public class UserRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    public Boolean exists(String userEmail) {
+        List<User> userExists = jdbcTemplate.query("SELECT id FROM users WHERE email = '" + userEmail + "'",
+        BeanPropertyRowMapper.newInstance(User.class));
+
+        return !userExists.isEmpty();
+    }
+
     public Boolean create(User userData) {
-        // jdbcTemplate.query("SELECT * FROM users",
-        // BeanPropertyRowMapper.newInstance(User.class));
         jdbcTemplate.update(
             "INSERT INTO users (first_name, last_name, email, password) VALUES ('" + userData.getFirstName() + "', '" + userData.getLastName() + "', '" + userData.getEmail() + "', '" + userData.getPassword() + "')");
         return true;
