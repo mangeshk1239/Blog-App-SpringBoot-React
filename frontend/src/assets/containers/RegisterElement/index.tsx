@@ -131,13 +131,15 @@ export default function RegisterElement(): JSX.Element {
             };
 
             console.log("userData", registerUserData);
-            await fetch("/api/user/create", {
+            const response = await fetch("/api/user/create", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify(registerUserData)
-            });
+            }).then(response => response.json());
+            
+            console.log("response", response);
         } catch (error) {
             console.log("ERROR", error);
         }

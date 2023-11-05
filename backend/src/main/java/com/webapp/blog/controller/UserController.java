@@ -1,5 +1,6 @@
 package com.webapp.blog.controller;
 
+import java.util.HashMap;
 import java.util.List;
 
 import javax.print.attribute.standard.MediaTray;
@@ -27,7 +28,7 @@ public class UserController {
     @Autowired
     UserService userService;
 
-    @PostMapping(value = "/create", produces = { "application/json" })
+    @PostMapping("/create")
     // public Boolean createUser(@RequestBody String reqBody) {
     // try {
     // userService.create(reqBody);
@@ -37,10 +38,13 @@ public class UserController {
     // return false;
     // }
     // }
-    public ResponseEntity createUser(@RequestBody User userData) {
+    public ResponseEntity<Object> createUser(@RequestBody User userData) {
 
         userService.create(userData);
+        HashMap<String, String> data = new HashMap<>();
+        data.put("success", "true");
+        data.put("message", "asd lol using ok");
 
-        return ResponseEntity.ok(HttpStatus.OK);
+        return new ResponseEntity<>(data, HttpStatus.OK);
     }
 }
