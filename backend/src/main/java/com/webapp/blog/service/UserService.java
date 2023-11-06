@@ -1,7 +1,5 @@
 package com.webapp.blog.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,6 +14,10 @@ public class UserService {
 
     public Boolean exists(String userEmail) {
         return userRepository.exists(userEmail);
+    }
+
+    public Boolean valid(String userPassword) {
+        return userRepository.valid(userPassword);
     }
 
     public Boolean create(User userData) {
