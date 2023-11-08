@@ -16,22 +16,29 @@ public class UserRepository {
     JdbcTemplate jdbcTemplate;
 
     public Boolean exists(String userEmail) {
-        List<User> userExists = jdbcTemplate.query("SELECT id FROM users WHERE email = '" + userEmail + "'",
-        BeanPropertyRowMapper.newInstance(User.class));
+        List<User> userExists = jdbcTemplate.query(
+                "SELECT id FROM users WHERE email = '" + userEmail + "'",
+                BeanPropertyRowMapper.newInstance(User.class)
+            );
 
         return !userExists.isEmpty();
     }
 
     public Boolean valid(String userPassword) {
-        List<User> validPassword = jdbcTemplate.query("SELECT id FROM users WHERE password = '" + userPassword + "'",
-        BeanPropertyRowMapper.newInstance(User.class));
+        List<User> validPassword = jdbcTemplate.query(
+            "SELECT id FROM users WHERE password = '" + userPassword + "'",
+            BeanPropertyRowMapper.newInstance(User.class)
+        );
 
         return !validPassword.isEmpty();
     }
 
     public Boolean create(User userData) {
         jdbcTemplate.update(
-            "INSERT INTO users (first_name, last_name, email, password) VALUES ('" + userData.getFirstName() + "', '" + userData.getLastName() + "', '" + userData.getEmail() + "', '" + userData.getPassword() + "')");
+                "INSERT INTO users (first_name, last_name, email, password) VALUES ('" + userData.getFirstName()
+                + "', '" + userData.getLastName() + "', '" + userData.getEmail() + "', '"
+                + userData.getPassword() + "')"
+        );
         return true;
     }
 }

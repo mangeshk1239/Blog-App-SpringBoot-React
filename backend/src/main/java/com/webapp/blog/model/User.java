@@ -29,16 +29,12 @@ public class User {
     @Column(name = "password")
     private String password;
 
-    @Column(name = "created_at")
-    private Date createdAt;
-
     // Getters
     public long getId() {return id;}
     public String getFirstName() { return firstName; }
     public String getLastName() { return lastName; }
     public String getEmail() { return email; }
     public String getPassword() { return password; }
-    public Date getCreatedAt() { return createdAt; }
 
     // Setters
     public void setId(long id) { this.id = id; }
@@ -46,5 +42,4 @@ public class User {
     public void setLastName(String lastName) { this.lastName = lastName; }
     public void setEmail(String email) { this.email = email; }
     public void setPassword(String password) { this.password = password; }
-    public void setCreatedAt(Date createdAt) { this.createdAt = createdAt; }
 }

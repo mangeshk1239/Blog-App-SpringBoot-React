@@ -3,5 +3,4 @@ export interface IRegisterUser {
     lastName: FormDataEntryValue | string | null,
     email: FormDataEntryValue | string | null,
     password: FormDataEntryValue | string | null,
-    createdAt: Date
 }
