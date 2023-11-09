@@ -8,6 +8,7 @@ export default function App(): JSX.Element {
         <Router.Route path="/" element={<Page.Login />} />
         <Router.Route path="/register" element={<Page.Register />} />
         <Router.Route path="/login" element={<Page.Login />} />
+        <Router.Route path="/blog" element={<Page.Blog />} />
       </Router.Routes>
     </Router.BrowserRouter>
   )
