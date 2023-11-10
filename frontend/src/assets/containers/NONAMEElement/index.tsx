@@ -6,7 +6,9 @@ export default function NONAMEElement(): JSX.Element {
         idk(Number(window.location.pathname.split("/blogger/")[1]));
     }, []);
     return (
-        <>ZXC</>
+        <>
+            <button>Create Blog</button>
+        </>
     )
     async function idk(id: number): Promise<void> {
         await fetch(`/api/blogger/${id}`);
