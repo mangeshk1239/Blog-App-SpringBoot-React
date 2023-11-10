@@ -15,36 +15,33 @@ public class UserRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    public List<User> findById(long id) {
-        return jdbcTemplate.query(
-            "SELECT * FROM users WHERE id = '" + id + "'",
-            BeanPropertyRowMapper.newInstance(User.class)
-        );
-    }
+    // public List<User> findById(long id) {
+    //     String sql = "SELECT * FROM users WHERE id = ?";
+    //     return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(User.class), id);
+    // }
+    // public User findById(long id) {
+    //     String sql = "SELECT * FROM users WHERE id = ?";
+    //     return jdbcTemplate.queryForObject(sql, new Object[]{id}, new MyModelMapper());
+    // }
 
     public Boolean exists(String userEmail) {
-        List<User> userExists = jdbcTemplate.query(
-            "SELECT id FROM users WHERE email = '" + userEmail + "'",
-            BeanPropertyRowMapper.newInstance(User.class)
-        );
-
+        String sql = "SELECT id FROM users WHERE email = ?";
+        List<User> userExists = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(User.class), userEmail);
         return !userExists.isEmpty();
     }
 
     public Boolean valid(String userPassword) {
-        List<User> validPassword = jdbcTemplate.query(
-            "SELECT id FROM users WHERE password = '" + userPassword + "'",
-            BeanPropertyRowMapper.newInstance(User.class)
-        );
-
+        String sql = "SELECT id FROM users WHERE password = ?";
+        List<User> validPassword = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(User.class), userPassword);
         return !validPassword.isEmpty();
     }
 
     public Boolean create(User userData) {
-        jdbcTemplate.update(
-                "INSERT INTO users (first_name, last_name, email, password) VALUES ('" + userData.getFirstName()
-                        + "', '" + userData.getLastName() + "', '" + userData.getEmail() + "', '"
-                        + userData.getPassword() + "')");
+        String sql = """
+            INSERT INTO users (first_name, last_name, email, password) 
+            VALUES (?, ?, ?)
+        """;
+        jdbcTemplate.update(sql, userData.getFirstName(), userData.getLastName(), userData.getEmail(), userData.getPassword());
         return true;
     }
 }
