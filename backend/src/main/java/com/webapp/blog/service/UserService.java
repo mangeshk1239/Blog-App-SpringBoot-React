@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.webapp.blog.model.User;
 import com.webapp.blog.repository.UserRepository;
+import java.util.List;
 
 @Service
 public class UserService {
@@ -23,5 +24,9 @@ public class UserService {
     public Boolean create(User userData) {
         userRepository.create(userData);
         return true;
+    }
+
+    public List<User> find(long id) {
+        return userRepository.findById(id);
     }
 }

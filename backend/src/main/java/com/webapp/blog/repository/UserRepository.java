@@ -15,11 +15,18 @@ public class UserRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
+    public List<User> findById(long id) {
+        return jdbcTemplate.query(
+            "SELECT * FROM users WHERE id = '" + id + "'",
+            BeanPropertyRowMapper.newInstance(User.class)
+        );
+    }
+
     public Boolean exists(String userEmail) {
         List<User> userExists = jdbcTemplate.query(
-                "SELECT id FROM users WHERE email = '" + userEmail + "'",
-                BeanPropertyRowMapper.newInstance(User.class)
-            );
+            "SELECT id FROM users WHERE email = '" + userEmail + "'",
+            BeanPropertyRowMapper.newInstance(User.class)
+        );
 
         return !userExists.isEmpty();
     }
@@ -36,9 +43,8 @@ public class UserRepository {
     public Boolean create(User userData) {
         jdbcTemplate.update(
                 "INSERT INTO users (first_name, last_name, email, password) VALUES ('" + userData.getFirstName()
-                + "', '" + userData.getLastName() + "', '" + userData.getEmail() + "', '"
-                + userData.getPassword() + "')"
-        );
+                        + "', '" + userData.getLastName() + "', '" + userData.getEmail() + "', '"
+                        + userData.getPassword() + "')");
         return true;
     }
 }
