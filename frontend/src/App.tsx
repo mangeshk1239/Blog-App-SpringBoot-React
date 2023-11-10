@@ -3,14 +3,19 @@ import * as Page from "./pages/pages";
 import * as React from "react";
 
 export default function App(): JSX.Element {
-  const [getHeading, setHeading] = React.useState("");
+  const [getTitle, setTitle] = React.useState("");
   const [getDescription, setDescription] = React.useState("");
 
-  const handleSubmit = async(e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const id = window.location.pathname.split("/");
-    console.log("LOL", getHeading, getDescription);
-    await fetch(`/api/blogger/${id[2]}/create`);
+    await fetch(`/api/blogger/${id[2]}/create`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ title: getTitle, description: getDescription })
+    });
   }
   return (
     <Router.BrowserRouter>
@@ -23,7 +28,7 @@ export default function App(): JSX.Element {
         <Router.Route path="/blogger/:id/create" element={<>
           <form onSubmit={handleSubmit}>
             <p>Heading</p>
-            <input onChange={(e) => setHeading(e.target.value)} />
+            <input onChange={(e) => setTitle(e.target.value)} />
             <br />
             <p>Description</p>
             <input onChange={(e) => setDescription(e.target.value)} />

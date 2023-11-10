@@ -23,4 +23,10 @@ public class Blog {
 
     @Column(name = "description")
     private String description;
+
+    // Getters
+    public long getId() {return id;}
+    public long getUserId() { return userId; }
+    public String getTitle() { return title; }
+    public String getDescription() { return description; }
 }
