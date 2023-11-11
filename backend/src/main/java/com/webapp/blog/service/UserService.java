@@ -26,7 +26,7 @@ public class UserService {
         return true;
     }
 
-    public List<User> find(long id) {
+    public User find(long id) {
         return userRepository.findById(id);
     }
 }

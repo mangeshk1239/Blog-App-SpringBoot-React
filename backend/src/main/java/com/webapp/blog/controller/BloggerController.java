@@ -33,10 +33,11 @@ public class BloggerController {
     @PostMapping("/{id}/create")
     public ResponseEntity<Object> createUser(@PathVariable(value = "id") long id, @RequestBody Blog blogData) {
         
-        List<User> userData =  userService.find(id);
-        bloggerService.create(userData, blogData);
+        User userData = userService.find(id);
+        System.out.println(userData.getFirstName());
+        // bloggerService.create(userData, blogData);
 
-        System.out.println("HIIIII");
+        // System.out.println("HIIIII");
         return new ResponseEntity<Object>("data", HttpStatus.OK);
     }
 }

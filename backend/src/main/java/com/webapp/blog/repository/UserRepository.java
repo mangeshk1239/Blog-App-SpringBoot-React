@@ -1,10 +1,13 @@
 package com.webapp.blog.repository;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.webapp.blog.model.User;
@@ -15,14 +18,22 @@ public class UserRepository {
     @Autowired
     JdbcTemplate jdbcTemplate;
 
-    // public List<User> findById(long id) {
-    //     String sql = "SELECT * FROM users WHERE id = ?";
-    //     return jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(User.class), id);
-    // }
-    // public User findById(long id) {
-    //     String sql = "SELECT * FROM users WHERE id = ?";
-    //     return jdbcTemplate.queryForObject(sql, new Object[]{id}, new MyModelMapper());
-    // }
+    public User findById(long id) {
+        System.out.println(id);
+        
+        String sql = "SELECT first_name FROM users WHERE id = ?";
+
+        return jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
+            @Override
+            public User mapRow(ResultSet rs, int rownumber) throws SQLException {   
+	        	User user=new User();  
+	        	user.setFirstName(rs.getString(1));  
+	        	// user.setFirstName(rs.getString(2));  
+	        	// user.setPassword(rs.getString(4));  
+	        	return user;  
+	        }  
+        }, id);
+    }
 
     public Boolean exists(String userEmail) {
         String sql = "SELECT id FROM users WHERE email = ?";
