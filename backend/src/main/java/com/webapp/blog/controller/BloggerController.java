@@ -34,7 +34,11 @@ public class BloggerController {
     public ResponseEntity<Object> createUser(@PathVariable(value = "id") long id, @RequestBody Blog blogData) {
         
         User userData = userService.find(id);
+        System.out.println(userData.getId());
+        System.out.println(userData.getEmail());
         System.out.println(userData.getFirstName());
+        System.out.println(userData.getLastName());
+        System.out.println(userData.getPassword());
         // bloggerService.create(userData, blogData);
 
         // System.out.println("HIIIII");

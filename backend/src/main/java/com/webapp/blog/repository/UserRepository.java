@@ -11,6 +11,7 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.webapp.blog.model.User;
+import com.webapp.blog.exception.UserException;
 
 @Repository
 public class UserRepository {
@@ -19,26 +20,34 @@ public class UserRepository {
     JdbcTemplate jdbcTemplate;
 
     public User findById(long id) {
-        System.out.println(id);
-        
-        String sql = "SELECT first_name FROM users WHERE id = ?";
+        String sql = "SELECT * FROM users WHERE id = ?";
 
         return jdbcTemplate.queryForObject(sql, new RowMapper<User>() {
             @Override
-            public User mapRow(ResultSet rs, int rownumber) throws SQLException {   
-	        	User user=new User();  
-	        	user.setFirstName(rs.getString(1));  
-	        	// user.setFirstName(rs.getString(2));  
-	        	// user.setPassword(rs.getString(4));  
-	        	return user;  
-	        }  
+            public User mapRow(ResultSet rs, int rownumber) throws SQLException {
+                User user = new User();
+                user.setId(rs.getLong(1));
+                user.setEmail(rs.getString(2));
+                user.setFirstName(rs.getString(3));
+                user.setLastName(rs.getString(4));
+                user.setPassword(rs.getString(5));
+                return user;
+            }
         }, id);
     }
 
     public Boolean exists(String userEmail) {
-        String sql = "SELECT id FROM users WHERE email = ?";
-        List<User> userExists = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(User.class), userEmail);
-        return !userExists.isEmpty();
+        try {
+            String sql = "SELECT id FROM users WHERE email = ?";
+
+            Long userId = jdbcTemplate.queryForObject(sql, Long.class, userEmail);
+            System.out.println(userId);
+
+            return true;
+        } catch (UserException e) {
+            System.out.println(e);
+            return false;
+        }
     }
 
     public Boolean valid(String userPassword) {
@@ -49,10 +58,11 @@ public class UserRepository {
 
     public Boolean create(User userData) {
         String sql = """
-            INSERT INTO users (first_name, last_name, email, password) 
-            VALUES (?, ?, ?)
-        """;
-        jdbcTemplate.update(sql, userData.getFirstName(), userData.getLastName(), userData.getEmail(), userData.getPassword());
+                    INSERT INTO users (first_name, last_name, email, password)
+                    VALUES (?, ?, ?)
+                """;
+        jdbcTemplate.update(sql, userData.getFirstName(), userData.getLastName(), userData.getEmail(),
+                userData.getPassword());
         return true;
     }
 }

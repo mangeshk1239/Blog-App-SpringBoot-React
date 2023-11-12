@@ -1,6 +1,7 @@
 package com.webapp.blog.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -24,20 +25,17 @@ public class UserController {
 
     @PostMapping("/create")
     public ResponseEntity<Object> createUser(@RequestBody User userData) {
-        HashMap<String, String> data = new HashMap<>();
         Boolean userExists = userService.exists(userData.getEmail());
 
         if (userExists == true) {
-            data.put("success", "false");
-            data.put("message", "User already exists");
-            return new ResponseEntity<Object>(data, HttpStatus.BAD_REQUEST);
+            return ResponseEntity.badRequest()
+            .body(Map.of("success", false, "message", "User already exists"));
         }
 
         userService.create(userData);
 
-        data.put("success", "true");
-        data.put("message", "Registered Successfully");
-        return new ResponseEntity<Object>(data, HttpStatus.OK);
+        return ResponseEntity.ok()
+        .body(Map.of("success", true, "message", "Registered Successfully"));
     }
 
     @PostMapping("/login")
