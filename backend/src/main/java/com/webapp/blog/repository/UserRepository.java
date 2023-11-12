@@ -2,16 +2,13 @@ package com.webapp.blog.repository;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import com.webapp.blog.model.User;
-import com.webapp.blog.exception.UserException;
 
 @Repository
 public class UserRepository {
@@ -37,32 +34,36 @@ public class UserRepository {
     }
 
     public Boolean exists(String userEmail) {
+        String sql = "SELECT id FROM users WHERE email = ? LIMIT 1";        
         try {
-            String sql = "SELECT id FROM users WHERE email = ?";
-
             Long userId = jdbcTemplate.queryForObject(sql, Long.class, userEmail);
-            System.out.println(userId);
-
-            return true;
-        } catch (UserException e) {
-            System.out.println(e);
+            return userId != null;
+        } catch (Exception e) {
             return false;
         }
     }
 
-    public Boolean valid(String userPassword) {
-        String sql = "SELECT id FROM users WHERE password = ?";
-        List<User> validPassword = jdbcTemplate.query(sql, BeanPropertyRowMapper.newInstance(User.class), userPassword);
-        return !validPassword.isEmpty();
+    public Boolean valid(String userEmail, String userPassword) {
+        String sql = "SELECT id FROM users WHERE email = ? AND password = ? LIMIT 1";
+        try {
+            Long userId = jdbcTemplate.queryForObject(sql, Long.class, userEmail, userPassword);
+            return userId != null;
+        } catch (Exception e) {
+            return false;
+        }
     }
 
-    public Boolean create(User userData) {
-        String sql = """
-                    INSERT INTO users (first_name, last_name, email, password)
-                    VALUES (?, ?, ?)
-                """;
-        jdbcTemplate.update(sql, userData.getFirstName(), userData.getLastName(), userData.getEmail(),
-                userData.getPassword());
-        return true;
+    public void create(User userData) {
+        String sql = 
+        """
+            INSERT INTO users (first_name, last_name, email, password)
+            VALUES (?, ?, ?, ?)
+        """;
+        try {                    
+            jdbcTemplate.update(sql, userData.getFirstName(), userData.getLastName(), userData.getEmail(),
+            userData.getPassword());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
     }
 }
