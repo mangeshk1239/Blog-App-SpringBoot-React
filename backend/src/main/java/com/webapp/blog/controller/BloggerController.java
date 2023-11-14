@@ -29,12 +29,13 @@ public class BloggerController {
         List<Blog> blogData = bloggerService.fetch(id);
         
         return ResponseEntity.ok()
-        .body(Map.of("success", true, "message", blogData));
+        .body(Map.of("success", true, "data", blogData));
     }
 
     @PostMapping("/{id}/create")
     public ResponseEntity<Object> createUser(@PathVariable(value = "id") long userId, @RequestBody Blog blogData) {
         bloggerService.create(blogData, userId);
-        return new ResponseEntity<Object>("data", HttpStatus.OK);
+        return ResponseEntity.ok()
+        .body(Map.of("success", true, "message", "Blog has been created successfully"));
     }
 }

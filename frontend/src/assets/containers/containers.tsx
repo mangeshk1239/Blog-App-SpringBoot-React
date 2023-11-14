@@ -1,6 +1,6 @@
 import LoginElement from "./LoginElement";
 import RegisterElement from "./RegisterElement";
-import BlogElement from "./BlogElement";
-import NONAMEElement from "./NONAMEElement";
+import BloggerElement from "./BloggerElement";
+import BloggerPostElement from "./BloggerPostElement";
 
-export { LoginElement, RegisterElement, BlogElement, NONAMEElement };
+export { LoginElement, RegisterElement, BloggerElement, BloggerPostElement };

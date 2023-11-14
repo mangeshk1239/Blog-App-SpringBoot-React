@@ -1,7 +1,7 @@
 import * as React from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function NONAMEElement(): JSX.Element {
+export default function BloggerElement(): JSX.Element {
     const navigate = useNavigate();
 
     React.useEffect(() => {
@@ -13,6 +13,7 @@ export default function NONAMEElement(): JSX.Element {
         </>
     )
     async function idk(id: number): Promise<void> {
-        await fetch(`/api/blogger/${id}`);
+        const response = await fetch(`/api/blogger/${id}`).then(response => response.json());
+        console.log("response", response);
     }
 }

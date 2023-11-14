@@ -1,6 +1,6 @@
 import Login from "./Login";
 import Register from "./Register";
-import Blog from "./Blog";
-import NONAME from "./NONAME";
+import Blogger from "./Blogger";
+import BloggerPost from "./BloggerPost";
 
-export { Login, Register, Blog, NONAME };
+export { Login, Register, Blogger, BloggerPost };
