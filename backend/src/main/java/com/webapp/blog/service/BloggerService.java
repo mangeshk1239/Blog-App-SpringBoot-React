@@ -12,7 +12,7 @@ public class BloggerService {
     @Autowired
     BloggerRepository bloggerRepository;
 
-    public String create(User userData, Blog blogdata) {
-        return bloggerRepository.create(userData, blogdata);
+    public void create(Blog blogdata, long userId) {
+        bloggerRepository.create(blogdata, userId);
     }
 }
