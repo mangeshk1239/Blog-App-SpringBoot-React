@@ -3,10 +3,12 @@ import * as MUI from '@mui/material';
 import * as Component from "../../components/components";
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import { ILoginUser } from './interfaces';
+import { useNavigate } from 'react-router-dom';
 
 const defaultTheme = MUI.createTheme();
 
 export default function LoginElement(): JSX.Element {
+    const navigate = useNavigate();
     return (
         <MUI.ThemeProvider theme={defaultTheme}>
             <MUI.Grid container component="main" sx={{ height: '100vh' }}>
@@ -80,7 +82,7 @@ export default function LoginElement(): JSX.Element {
                             </MUI.Button>
                             <MUI.Grid container>
                                 <MUI.Grid item xs>
-                                    <MUI.Link href="#" variant="body2">
+                                    <MUI.Link href="/register" variant="body2">
                                         {"Don't have an account? Register here"}
                                     </MUI.Link>
                                 </MUI.Grid>
@@ -114,6 +116,10 @@ export default function LoginElement(): JSX.Element {
                 },
                 body: JSON.stringify(loginUserData)
             }).then(response => response.json());
+
+            if (response.success) {
+                navigate("/blogger/1");
+            }
 
             console.log("response", response);
         } catch (error) {

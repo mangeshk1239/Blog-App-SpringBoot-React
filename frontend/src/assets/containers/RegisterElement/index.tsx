@@ -89,7 +89,7 @@ export default function RegisterElement(): JSX.Element {
                                 <MUI.Grid item xs>
                                 </MUI.Grid>
                                 <MUI.Grid item>
-                                    <MUI.Link href="#" variant="body2">
+                                    <MUI.Link href="/login" variant="body2">
                                         {"Already have an account? Sign in"}
                                     </MUI.Link>
                                 </MUI.Grid>
