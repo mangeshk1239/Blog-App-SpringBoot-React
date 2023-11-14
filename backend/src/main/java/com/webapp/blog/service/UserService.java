@@ -23,8 +23,4 @@ public class UserService {
     public void create(User userData) {
         userRepository.create(userData);
     }
-
-    public User find(long id) {
-        return userRepository.findById(id);
-    }
 }

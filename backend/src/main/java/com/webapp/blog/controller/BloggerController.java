@@ -1,5 +1,8 @@
 package com.webapp.blog.controller;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import com.webapp.blog.model.Blog;
-import com.webapp.blog.model.User;
 import com.webapp.blog.service.BloggerService;
-import com.webapp.blog.service.UserService;
-import java.util.List;
 
 @Controller
 @RestController
@@ -26,7 +26,10 @@ public class BloggerController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Object> getUser(@PathVariable(value = "id") long id) {
-        return new ResponseEntity<Object>("data", HttpStatus.OK);
+        List<Blog> blogData = bloggerService.fetch(id);
+        
+        return ResponseEntity.ok()
+        .body(Map.of("success", true, "message", blogData));
     }
 
     @PostMapping("/{id}/create")

@@ -1,5 +1,7 @@
 package com.webapp.blog.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -14,5 +16,9 @@ public class BloggerService {
 
     public void create(Blog blogdata, long userId) {
         bloggerRepository.create(blogdata, userId);
+    }
+
+    public List<Blog> fetch(long userId) {
+        return bloggerRepository.fetch(userId);
     }
 }
