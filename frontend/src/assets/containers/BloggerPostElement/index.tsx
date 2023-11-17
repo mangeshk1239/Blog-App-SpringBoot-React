@@ -6,13 +6,19 @@ import { styled } from '@mui/system';
 export default function BloggerPostElement(): JSX.Element {
     const [getTitle, setTitle] = React.useState<string>("");
     const [getDescription, setDescription] = React.useState<string>("");
+    const [getPrevDescription, setPrevDescription] = React.useState<string>("");
+    const [getImageUrl, setImageUrl] = React.useState<string>("");
 
     return (
         <>
             <form onSubmit={handleSubmit}>
                 <TextareaAutosize maxLength={50} onChange={(e) => setTitle(e.target.value)} required placeholder="Title..." />
                 <br />
+                <TextareaAutosize onChange={(e) => setPrevDescription(e.target.value)} required placeholder="Preview Description..." />
+                <br />
                 <TextareaAutosize onChange={(e) => setDescription(e.target.value)} required placeholder="Description..." />
+                <br />
+                <TextareaAutosize onChange={(e) => setImageUrl(e.target.value)} required placeholder="Image URL..." />
                 <br />
                 <MUI.Button type="submit" size="medium" variant="contained">Post</MUI.Button>
             </form>
@@ -27,7 +33,12 @@ export default function BloggerPostElement(): JSX.Element {
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ title: getTitle, description: getDescription })
+            body: JSON.stringify({
+                title: getTitle,
+                description: getDescription,
+                preview_description: getPrevDescription,
+                blog_image_url: getImageUrl
+            })
         });
     }
 }

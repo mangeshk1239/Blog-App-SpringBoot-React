@@ -33,13 +33,20 @@ public class BloggerRepository {
     }
 
     public void create(Blog blogData, long userId) {
-        String sql = 
-        """
-            INSERT INTO blogs (user_id, title, description)
-            VALUES (?, ?, ?)
-        """;
+        System.out.println(blogData.getBlogImageUrl());
+        String sql = """
+                    INSERT INTO blogs (user_id, title, description, preview_description, blog_image_url)
+                    VALUES (?, ?, ?, ?, ?)
+                """;
         try {
-            jdbcTemplate.update(sql, userId, blogData.getTitle(), blogData.getDescription());
+            jdbcTemplate.update(
+                sql,
+                userId,
+                blogData.getTitle(),
+                blogData.getDescription(),
+                blogData.getPreviewDescription(),
+                blogData.getBlogImageUrl()
+            );
         } catch (Exception e) {
             System.out.println(e);
         }
